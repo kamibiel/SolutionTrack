@@ -19,12 +19,12 @@ SolutionTrack é uma plataforma desenvolvida em C# com ASP.NET Core que permite 
 - **Entity Framework Core**: ORM para gerenciamento do banco de dados.
 - **MySQL**: Banco de dados utilizado.
 - **Bootstrap**: Estilização e design responsivo.
-- **Identity/OAuth**: Gerenciamento de autenticação e autorização.
+<!--- **Identity/OAuth**: Gerenciamento de autenticação e autorização.-->
 
 ## Instalação
 
 ### Pré-requisitos
-- .NET SDK (versão x.x)
+- .NET SDK (versão 6.0)
 - MySQL (ou outro banco de dados compatível)
 
 ### Passos para instalar
