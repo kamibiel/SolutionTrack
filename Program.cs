@@ -1,6 +1,15 @@
+using SolutionTrack.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<SolutionTrackContext>(options => 
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("ConexaoBD"),
+        new MySqlServerVersion(new Version(8,4,2))
+        )
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
