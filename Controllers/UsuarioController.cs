@@ -128,7 +128,7 @@ namespace SolutionTrack.Controllers
             try
             {
                 // Busca um usuário
-                var usuarioExistente = _context.Usuarios.Find(idy);
+                var usuarioExistente = _context.Usuarios.Find(id);
 
                 if(usuarioExistente == null)
                 {

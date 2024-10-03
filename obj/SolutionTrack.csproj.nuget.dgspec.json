@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\app\\SolutionTrack\\SolutionTrack.csproj": {}
+    "/home/kamibiel/Documentos/app/SolutionTrack/SolutionTrack.csproj": {}
   },
   "projects": {
-    "D:\\app\\SolutionTrack\\SolutionTrack.csproj": {
+    "/home/kamibiel/Documentos/app/SolutionTrack/SolutionTrack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\app\\SolutionTrack\\SolutionTrack.csproj",
+        "projectUniqueName": "/home/kamibiel/Documentos/app/SolutionTrack/SolutionTrack.csproj",
         "projectName": "SolutionTrack",
-        "projectPath": "D:\\app\\SolutionTrack\\SolutionTrack.csproj",
-        "packagesPath": "C:\\Users\\kamibiel\\.nuget\\packages\\",
-        "outputPath": "D:\\app\\SolutionTrack\\obj\\",
+        "projectPath": "/home/kamibiel/Documentos/app/SolutionTrack/SolutionTrack.csproj",
+        "packagesPath": "/home/kamibiel/.nuget/packages/",
+        "outputPath": "/home/kamibiel/Documentos/app/SolutionTrack/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\kamibiel\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/kamibiel/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.425\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/249/sdk/6.0.425/RuntimeIdentifierGraph.json"
         }
       }
     }
