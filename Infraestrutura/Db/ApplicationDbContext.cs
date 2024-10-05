@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using SolutionTrack.Dominio.Entidades;
 
@@ -16,22 +17,12 @@ namespace SolutionTrack.Infraestrutura.Db
         {
             _configuracaoAppSettings = configuracaoAppSettings;
         }
-        public DbSet<Administrador> Administradores { get; set; } = default!;
+        public DbSet<Usuario> Usuarios { get; set; } = default!;
+        public DbSet<Perfil> Profiles { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var hashedSenha = BCrypt.Net.BCrypt.HashPassword("ASDzxc456!@#*");
 
-            modelBuilder.Entity<Administrador>().HasData(
-                new Administrador
-                {
-                    Id = 1,
-                    Email = "gabriel.o.bonifacio@gmail.com",
-                    Username = "kamibiel",
-                    Senha = hashedSenha,
-                    Perfil = "Adm"
-                }
-            );
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,9 +33,46 @@ namespace SolutionTrack.Infraestrutura.Db
                 if (!string.IsNullOrEmpty(stringConexao))
                 {
                     optionsBuilder.UseMySql(
-                                    stringConexao,
-                                    ServerVersion.AutoDetect(stringConexao)
+                        stringConexao,
+                        ServerVersion.AutoDetect(stringConexao)
                     );
+                }
+            }
+        }
+
+        public async Task CriarUsuarioMasterAsync()
+        {
+            var usuarioMasterEmail = "usuario@example.com";
+            var usuarioMasterNome = "Usuário Master";
+            var usuarioMasterUsername = "usuario";
+            var perfilAdmin = new Perfil { Nome = "Master" };
+
+            var usuarioMaster = await Usuarios
+                .Where(u => u.Email == usuarioMasterEmail || u.Username == usuarioMasterUsername)
+                .FirstOrDefaultAsync();
+
+            if (usuarioMaster == null)
+            {
+                var hashedSenha = BCrypt.Net.BCrypt.HashPassword("Senha");
+
+                var novoUsuarioMaster = new Usuario
+                {
+                    Email = usuarioMasterEmail,
+                    Nome = usuarioMasterNome,
+                    Username = usuarioMasterUsername,
+                    Senha = hashedSenha,
+                    Perfil = perfilAdmin
+                };
+
+                Usuarios.Add(novoUsuarioMaster);
+                try
+                {
+                    await SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erro ao salvar alterações: {ex.Message}");
+                    throw;
                 }
             }
         }

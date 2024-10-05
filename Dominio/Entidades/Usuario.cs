@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SolutionTrack.Dominio.Entidades
 {
-    public class Administrador
+    public class Usuario
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,16 +15,27 @@ namespace SolutionTrack.Dominio.Entidades
 
         [Required]
         [StringLength(255)]
-        public string Email { get; set; } = default!;
+        public string Nome { get; set; } = default!;
+
+        [Required]
+        [StringLength(50)]
+        public string Username { get; set; } = default!;
 
         [Required]
         [StringLength(255)]
-        public string Username { get; set; } = default!;
+        public string Email { get; set; } = default!;
 
-        [StringLength(50)]
+        // [Required]
+        // [StringLength(20)]
+        // public string Cpf { get; set; } = default!;
+
+        [StringLength(60)]
         public string Senha { get; set; } = default!;
 
+        [ForeignKey("Perfil")]
+        public int PerfilId { get; set; }
+
         [StringLength(10)]
-        public string Perfil { get; set; } = default!;
+        public Perfil Perfil { get; set; } = default!;
     }
 }
