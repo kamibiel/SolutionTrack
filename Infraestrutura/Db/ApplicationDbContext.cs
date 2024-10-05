@@ -69,9 +69,8 @@ namespace SolutionTrack.Infraestrutura.Db
                 {
                     await SaveChangesAsync();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine($"Erro ao salvar alterações: {ex.Message}");
                     throw;
                 }
             }

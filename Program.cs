@@ -41,13 +41,13 @@ app.MapPost("/login", async (LoginDTO loginDTO, ApplicationDbContext dbContext) 
 
     // Verifica se está tentando fazer login como o usuário Master
     var usuarioMaster = await dbContext.Usuarios
-      .FirstOrDefaultAsync(u => u.Username == "kamibiel");
+      .FirstOrDefaultAsync(u => u.Username == "usuario");
 
     if(usuarioMaster != null)
     {
       bool senhaMasterValida = BCrypt.Net.BCrypt.Verify(loginDTO.Senha, usuarioMaster.Senha);
 
-      if(loginDTO.Username == "kamibiel" && senhaMasterValida)
+      if(loginDTO.Username == "usuario" && senhaMasterValida)
       {
         return Results.Ok("Login com sucesso!");
       }
