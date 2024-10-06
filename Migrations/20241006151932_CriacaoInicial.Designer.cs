@@ -11,7 +11,7 @@ using SolutionTrack.Infraestrutura.Db;
 namespace SolutionTrack.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241005212429_CriacaoInicial")]
+    [Migration("20241006151932_CriacaoInicial")]
     partial class CriacaoInicial
     {
         /// <inheritdoc />
