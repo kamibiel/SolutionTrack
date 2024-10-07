@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SolutionTrack.Dominio.DTOs;
 using SolutionTrack.Dominio.Entidades;
 using SolutionTrack.Dominio.Interfaces;
+using SolutionTrack.Dominio.ModelViews;
 using SolutionTrack.Dominio.Servicos;
 using SolutionTrack.Infraestrutura.Db;
 
@@ -30,7 +31,16 @@ using (var scope = app.Services.CreateScope())
   await dbContext.CriarUsuarioMasterAsync();
 }
 
-app.MapGet("/", () => "Hello World!");
+// app.MapGet("/", () => Results.Json(new Home()));
+
+app.MapGet("/", () => Results.Json(new
+{
+  mensagem = "👋 Bem-vindo à API SolutionTrack! Desenvolvida pela BlackBit para ajudar no rastreamento e solução de problemas.",
+  documentacao = "/swagger", // Link HTML
+  empresa = "BlackBit",
+  versao = "1.0.0",
+  autor = "Desenvolvido por KamiBiel"
+}));
 
 app.MapPost("/login", async ([FromBody] LoginDTO loginDTO, ILoginService LoginService) =>
 {
