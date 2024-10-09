@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SolutionTrack.Dominio.DTOs;
 using SolutionTrack.Dominio.Entidades;
 using SolutionTrack.Dominio.Interfaces;
 using SolutionTrack.Infraestrutura.Db;
@@ -33,11 +34,29 @@ namespace SolutionTrack.Dominio.Servicos
             return usuario;
         }
 
-        public async Task<Usuario> CriarUsuario(Usuario usuario)
+        public async Task<UsuarioDTO> CriarUsuario(UsuarioDTO usuarioDTO)
         {
+            var usuario = new Usuario
+            {
+                Nome = usuarioDTO.Nome,
+                Username = usuarioDTO.Username,
+                Email = usuarioDTO.Email,
+                Senha = usuarioDTO.Senha,
+                PerfilId = usuarioDTO.PerfilId
+            };
+
             _application.Usuarios.Add(usuario);
             await _application.SaveChangesAsync();
-            return usuario;
+            
+            return new UsuarioDTO
+            {
+                Nome = usuario.Nome,
+                Username = usuario.Username,
+                Email = usuario.Email,
+                Senha = usuario.Senha,
+                PerfilId = usuario.PerfilId,
+                Perfil = usuario.Perfil
+            };
         }
 
         public async Task<(IEnumerable<Usuario> Usuarios, int TotalUsuarios)> ObterTodosUsuarios(

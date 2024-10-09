@@ -13,7 +13,7 @@ namespace SolutionTrack.Dominio.ModelViews
         }
         public string Doc
         {
-            get => "<a href='/swagger'>Documentação da API</a>";
+            get => "/swagger";
         }
         public string Empresa { get => "BlackBit"; }
         public string Versao { get => "Versão 1.0.0"; }
