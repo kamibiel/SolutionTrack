@@ -42,12 +42,12 @@ namespace SolutionTrack.Dominio.Servicos
                 Username = usuarioDTO.Username,
                 Email = usuarioDTO.Email,
                 Senha = usuarioDTO.Senha,
-                PerfilId = usuarioDTO.PerfilId
+                PerfilId = usuarioDTO.PerfilId.HasValue ? usuarioDTO.PerfilId.Value : default
             };
 
             _application.Usuarios.Add(usuario);
             await _application.SaveChangesAsync();
-            
+
             return new UsuarioDTO
             {
                 Nome = usuario.Nome,
