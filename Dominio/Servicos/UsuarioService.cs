@@ -34,36 +34,25 @@ namespace SolutionTrack.Dominio.Servicos
             return usuario;
         }
 
-        public async Task<UsuarioDTO> CriarUsuario(UsuarioDTO usuarioDTO)
+        public async Task<Usuario> CriarUsuario(CriarUsuarioDTO criarUsuarioDTO)
         {
             var usuario = new Usuario
             {
-                Nome = usuarioDTO.Nome,
-                Username = usuarioDTO.Username,
-                Email = usuarioDTO.Email,
-                Senha = usuarioDTO.Senha,
-                PerfilId = usuarioDTO.PerfilId.HasValue ? usuarioDTO.PerfilId.Value : default
+                Nome = criarUsuarioDTO.Nome,
+                Email = criarUsuarioDTO.Email,
+                Senha = criarUsuarioDTO.Senha,
             };
 
             _application.Usuarios.Add(usuario);
             await _application.SaveChangesAsync();
 
-            return new UsuarioDTO
-            {
-                Nome = usuario.Nome,
-                Username = usuario.Username,
-                Email = usuario.Email,
-                Senha = usuario.Senha,
-                PerfilId = usuario.PerfilId,
-                Perfil = usuario.Perfil
-            };
+            return usuario;
         }
 
         public async Task<(IEnumerable<Usuario> Usuarios, int TotalUsuarios)> ObterTodosUsuarios(
             int pagina = 1, 
             int tamanhoPagina = 10,
             string? nome = null, 
-            string? username = null, 
             string? email = null)
         {
             var query = _application.Usuarios.AsQueryable();
@@ -71,11 +60,6 @@ namespace SolutionTrack.Dominio.Servicos
             if(!string.IsNullOrEmpty(nome))
             {
                 query = query.Where(u => EF.Functions.Like(u.Nome.ToLower(), $"%{nome.ToLower()}%"));
-            }
-
-            if(!string.IsNullOrEmpty(username))
-            {
-                query = query.Where(u => EF.Functions.Like(u.Username.ToLower(), $"%{username.ToLower()}%"));
             }
 
             if(!string.IsNullOrEmpty(email))

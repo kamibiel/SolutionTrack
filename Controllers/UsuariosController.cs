@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolutionTrack.Dominio.DTOs;
 using SolutionTrack.Dominio.Entidades;
@@ -25,17 +26,16 @@ namespace SolutionTrack.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CriarUsuario([FromBody] UsuarioDTO usuarioDTO)
+        public async Task<IActionResult> CriarUsuario([FromBody] CriarUsuarioDTO criarUsuarioDTO)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            usuarioDTO.Senha =  BCrypt.Net.BCrypt.HashPassword(usuarioDTO.Senha);
+            criarUsuarioDTO.Senha = BCrypt.Net.BCrypt.HashPassword(criarUsuarioDTO.Senha);
 
-            var usuario = _mapper.Map<Usuario>(usuarioDTO);
-
-            var novoUsuario = await _usuarioService.CriarUsuario(usuarioDTO);
+            var novoUsuario = await _usuarioService.CriarUsuario(criarUsuarioDTO);
             var usuarioModelView = _mapper.Map<UsuarioModelView>(novoUsuario);
             
             return CreatedAtAction(nameof(ObterUsuarioPorId), new {
@@ -43,6 +43,7 @@ namespace SolutionTrack.Controllers
             }, usuarioModelView);
         }
 
+        [Authorize]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> ObterUsuarioPorId(int id)
         {
@@ -55,6 +56,7 @@ namespace SolutionTrack.Controllers
             return Ok(usuarioModelView);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ObterTodosUsuarios([FromQuery] int pagina = 1, [FromQuery] int tamanhoPagina = 10)
         {
@@ -68,6 +70,7 @@ namespace SolutionTrack.Controllers
             });
         }
 
+        [Authorize]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> AtualizarUsuario(int id, [FromBody] UsuarioDTO usuarioDTO)
         {
@@ -82,11 +85,6 @@ namespace SolutionTrack.Controllers
                 usuario.Nome = usuarioDTO.Nome;
             }
 
-            if(usuarioDTO.Username != null)
-            {
-                usuario.Username = usuarioDTO.Username;
-            }
-
             if(usuarioDTO.Email != null)
             {
                 usuario.Email = usuarioDTO.Email;
@@ -97,17 +95,13 @@ namespace SolutionTrack.Controllers
                 usuario.Senha = BCrypt.Net.BCrypt.HashPassword(usuarioDTO.Senha);
             }
 
-            if(usuarioDTO.PerfilId.HasValue)
-            {
-                usuario.PerfilId = usuarioDTO.PerfilId.Value;
-            }
-
             var usuarioAtualizado = await _usuarioService.AtualizarUsuario(usuario);
 
             var usuarioModelView = _mapper.Map<UsuarioModelView>(usuarioAtualizado);
             return Ok(usuarioModelView);
         }
 
+        [Authorize]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> ApagarUsuario(int id){
             var usuario = await _usuarioService.ObterUsuarioPorId(id);

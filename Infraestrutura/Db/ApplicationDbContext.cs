@@ -18,7 +18,6 @@ namespace SolutionTrack.Infraestrutura.Db
             _configuracaoAppSettings = configuracaoAppSettings;
         }
         public DbSet<Usuario> Usuarios { get; set; } = default!;
-        public DbSet<Perfil> Profiles { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,11 +43,9 @@ namespace SolutionTrack.Infraestrutura.Db
         {
             var usuarioMasterEmail = "usuario@example.com";
             var usuarioMasterNome = "Usuário Master";
-            var usuarioMasterUsername = "usuario";
-            var perfilAdmin = new Perfil { Nome = "Master" };
 
             var usuarioMaster = await Usuarios
-                .Where(u => u.Email == usuarioMasterEmail || u.Username == usuarioMasterUsername)
+                .Where(u => u.Email == usuarioMasterEmail)
                 .FirstOrDefaultAsync();
 
             if (usuarioMaster == null)
@@ -59,9 +56,7 @@ namespace SolutionTrack.Infraestrutura.Db
                 {
                     Email = usuarioMasterEmail,
                     Nome = usuarioMasterNome,
-                    Username = usuarioMasterUsername,
                     Senha = hashedSenha,
-                    Perfil = perfilAdmin
                 };
 
                 Usuarios.Add(novoUsuarioMaster);

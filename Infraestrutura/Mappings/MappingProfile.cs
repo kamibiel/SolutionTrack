@@ -14,7 +14,9 @@ namespace SolutionTrack.Infraestrutura.Mappings
     {
         public MappingProfile()
         {
+            // Mapeamento do usuário
             CreateMap<UsuarioDTO, Usuario>();
+            CreateMap<CriarUsuarioDTO, Usuario>();
             CreateMap<Usuario, UsuarioModelView>();
             CreateMap<UsuarioDTO, UsuarioModelView>();
         }

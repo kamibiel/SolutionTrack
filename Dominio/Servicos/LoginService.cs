@@ -21,7 +21,7 @@ namespace SolutionTrack.Dominio.Servicos
         {
             // Busca o administrador no banco de dados
             var admin = await _dbContext.Usuarios
-                .FirstOrDefaultAsync(u => u.Username == usernameOrEmail);
+                .FirstOrDefaultAsync(u => u.Email == usernameOrEmail);
             
             if(admin == null) return false;
 
@@ -32,7 +32,7 @@ namespace SolutionTrack.Dominio.Servicos
         {
             // Busca o usuário no banco de dados
             var usuario = await _dbContext.Usuarios
-                .FirstOrDefaultAsync(u => u.Username == usernameOrEmail);
+                .FirstOrDefaultAsync(u => u.Email == usernameOrEmail);
             
             if(usuario == null) return false;
 
